@@ -1,0 +1,519 @@
+
+\newcommand{\mynote}[3]{\textcolor{#3}{\textsf{{#2}}}}
+\newcommand{\rkc}[1]{\mynote{rkc}{#1}{blue}}
+
+\newcommand{\vspaceHack}[1]{\vspace{#1}}
+
+\def\parahead#1{\paragraph{\textbf{#1}.}}
+
+\newcommand{\ie}{{\emph{i.e.}\ }}
+\newcommand{\eg}{{\emph{e.g.}\ }}
+\newcommand{\etc}{{\emph{etc.}}}
+\newcommand{\cf}{{\emph{cf.}}}
+\newcommand{\etal}{{\emph{et al.}}}
+
+\newcommand{\EMPH}[1]{{#1}}
+
+\newcommand{\defeq}{\circeq}
+
+\def\sectionautorefname{\S\!}
+\def\subsectionautorefname{\S\!}
+\def\subsubsectionautorefname{\S\!}
+\def\chapterautorefname{{Chapter}}
+
+\newcommand{\lang}{\textrm{System Ref}}
+\newcommand{\javascript}{\textrm{JavaScript}}
+
+\newcommand{\set}[1]{\{{#1}\}}
+\newcommand{\seq}[1]{\overline{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Spacing
+
+\newcommand{\sep}{\hspace{0.06in}}
+\newcommand{\sepPremise}{\hspace{0.20in}}
+\newcommand{\hsepRule}{\hspace{0.20in}}
+\newcommand{\vsepRuleHeight}{0.12in}
+\newcommand{\vsepRule}{\vspace{\vsepRuleHeight}}
+\newcommand{\miniSepOne}{\hspace{0.01in}}
+\newcommand{\miniSepTwo}{\hspace{0.02in}}
+\newcommand{\miniSepThree}{\hspace{0.03in}}
+\newcommand{\miniSepFour}{\hspace{0.04in}}
+\newcommand{\miniSepFive}{\hspace{0.05in}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Metavariables
+
+\newcommand{\varVar}{x}
+\newcommand{\varVarY}{y}
+\newcommand{\varVarZ}{z}
+\newcommand{\varVal}{v}
+\newcommand{\varWal}{w}
+\newcommand{\varExp}{e}
+\newcommand{\varStmt}{s}
+\newcommand{\varConst}{c}
+\newcommand{\varBaseTyp}{B}
+\newcommand{\varTyp}{T}
+\newcommand{\varTypS}{S}
+\newcommand{\varHeapTyp}{U}
+%%\newcommand{\varPreTyp}{U}
+%%\newcommand{\varPrenexTyp}{U}
+%%\newcommand{\varPrenexTyp}{V}
+\newcommand{\varPrenexTyp}{E}
+%%\newcommand{\varPreTyp}{P}
+\newcommand{\varField}{f}
+\newcommand{\varFieldG}{g}
+\newcommand{\varRecdTyp}{R}
+\newcommand{\varMuTyp}{M}
+\newcommand{\varTyVar}{A}
+\newcommand{\varTyVarB}{B}
+\newcommand{\varTyVarX}{X}
+\newcommand{\varMuVar}{\varTyVarX}
+%%\newcommand{\varAssumptions}{\gamma}
+\newcommand{\varWorld}{W}
+\newcommand{\varHeap}{h}
+\newcommand{\varHeapVar}{H}
+\newcommand{\varHeapEnv}{\Sigma}
+\newcommand{\varHeapConstraints}{C}
+\newcommand{\varRetBinder}{@ret}
+\newcommand{\locName}{\ell}
+\newcommand{\varLoc}{\locName}
+\newcommand{\varLocVar}{L}
+\newcommand{\varLocVarM}{M}
+\newcommand{\varLocConst}{a}
+\newcommand{\varRunLoc}{r}
+\newcommand{\varFormOne}{p}
+\newcommand{\varFormTwo}{q}
+\newcommand{\varForm}{\varFormOne}
+\newcommand{\varLogP}{P}
+\newcommand{\varSubst}{\theta}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Expression Syntax
+
+\newcommand{\expGap}{\miniSepThree}
+
+\newcommand{\valFun}[2]{\ensuremath{\lambda{#1}.\miniSepOne{#2}}}
+%%\newcommand{\valFun}[2]
+%%  {\ensuremath{\texttt{function}\miniSepOne({#1})\{\miniSepOne#2\miniSepOne\}}}
+%%\newcommand{\valFunTuple}[2]
+%%  {\ensuremath{\texttt{function}\miniSepOne{#1}\{\miniSepOne#2\miniSepOne\}}}
+
+\newcommand{\expApp}[2]{\ensuremath{{#1}\expGap{#2}}}
+\newcommand{\expAppMono}[2]{\ensuremath{{#1}({#2})}}
+\newcommand{\expAppPoly}[3]{\ensuremath{[{#1}]\ \expAppMono{#2}{#3}}}
+\newcommand{\expAppTuple}[2]{\ensuremath{{#1}{#2}}}
+
+\newcommand{\expLet}[3]
+   {\ensuremath{\texttt{let}\expGap{#1}={#2}\expGap\texttt{in}\expGap{#3}}}
+
+\newcommand{\expVar}[2]
+   {\ensuremath{\texttt{var}\expGap{#1}\expGap\texttt{in}\expGap{#2}}}
+\newcommand{\expRef}[1]
+   {\ensuremath{\texttt{ref}\expGap{#1}}}
+\newcommand{\expDeref}[1]
+   {\ensuremath{\texttt{deref}\expGap{#1}}}
+\newcommand{\expAssign}[2]
+   %%{\ensuremath{{#1}\expGap{:=}\expGap{#2}}}
+   {\ensuremath{\texttt{setref}\expGap{#1}\expGap{#2}}}
+
+\newcommand{\expCase}[3]
+   {\ensuremath{\texttt{case}\expGap{#1}\expGap
+      (\texttt{inl}\expGap\texttt{->}\expGap{#2}
+       \miniSepTwo\texttt{|}\miniSepTwo
+       \texttt{inr}\expGap\texttt{->}\expGap{#3})}}
+
+%% \newcommand{\expFst}[1]{\ensuremath{{#1}.\texttt{1}}}
+%% \newcommand{\expSnd}[1]{\ensuremath{{#1}.\texttt{2}}}
+
+\newcommand{\expFst}[1]{\ensuremath{\texttt{fst}\expGap{#1}}}
+\newcommand{\expSnd}[1]{\ensuremath{\texttt{snd}\expGap{#1}}}
+
+\newcommand{\expTupleTwo}[2]{(\ensuremath{{#1},\miniSepTwo{#2}})}
+\newcommand{\expTupleThree}[3]{(\ensuremath{{#1},\miniSepTwo{#2},\miniSepTwo{#3}})}
+\newcommand{\expTupleFour}[4]{(\ensuremath{{#1},\miniSepTwo{#2},\miniSepTwo{#3},\miniSepTwo{#4}})}
+
+\newcommand{\expRecdZero}{\ensuremath{\{ \}}}
+\newcommand{\expRecd}[2]{\ensuremath{\{ {#1}={#2} \}}}
+\newcommand{\expRecdTwo}[4]{\ensuremath{\{ {#1}={#2};\ {#3}={#4} \}}}
+
+%%\newcommand{\expNewObj}{\ensuremath{\texttt{new}\expGap\expRecdZero}}
+\newcommand{\expNewObj}{\ensuremath{\texttt{new}}}
+
+\newcommand{\expGet}[2]{\ensuremath{{#1}\texttt{[}{#2}\texttt{]}}}
+\newcommand{\expGetField}[2]{\ensuremath{{#1}.{#2}}}
+\newcommand{\expWith}[3]{\ensuremath{\{ {#1}\ \texttt{with}\ {#2}={#3} \}}}
+\newcommand{\expSet}[3]{\ensuremath{{#1}\texttt{[}{#2}\texttt{]}={#3}}}
+\newcommand{\expSetField}[3]{\ensuremath{{#1}.{#2}\expGap{:=}\expGap{#3}}}
+\newcommand{\expFold}[4]
+  %%{[\texttt{fold}\expGap{\muType{#1}{#2}}]\expGap{#3}}
+  {\texttt{fold}\expGap{(\muType{#1}{\existsType{#2}{#3}})}\expGap{#4}}
+\newcommand{\expUnfold}[4]
+  %%{[\texttt{unfold}\expGap{\muType{#1}{#2}}]\expGap{#3}}
+  {\texttt{unfold}\expGap{(\muType{#1}{\existsType{#2}{#3}})}\expGap{#4}}
+
+\newcommand{\str}[1]{\ensuremath{\mathtt{``{#1}"}}}
+\newcommand{\ttfld}[1]{\ensuremath{\mathtt{``{#1}"}}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Constants
+
+\newcommand{\vTrue}{\ensuremath{\mathtt{true}}}
+\newcommand{\vFalse}{\ensuremath{\mathtt{false}}}
+\newcommand{\vNull}{\ensuremath{\texttt{null}}}
+\newcommand{\vGet}{\texttt{get}}
+\newcommand{\vMem}{\texttt{mem}}
+\newcommand{\vSet}{\texttt{set}}
+\newcommand{\vDel}{\texttt{del}}
+\newcommand{\vTag}{\texttt{tagof}}
+\newcommand{\vFix}{\texttt{fix}}
+\newcommand{\vNaN}{\texttt{NaN}}
+\newcommand{\vUndef}{\texttt{undefined}}
+\newcommand{\vNot}{\texttt{not}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Operational Semantics
+
+\newcommand{\reduce}{\ensuremath{\hookrightarrow}}
+\newcommand{\reducesTo}[2]{{#1}\reduce{#2}}
+\newcommand{\reducesToMulti}[2]{{#1}\reduce^{*}{#2}}
+\newcommand{\impReducesTo}[4]{{#1};\ {#2}\reduce{#3};\ {#4}}
+\newcommand{\deltaApp}[2]{\ensuremath{\delta({#1},{#2})}}
+\newcommand{\runHeapBind}[2]{\ensuremath{{#1}\mapsto{#2}}}
+\newcommand{\runHeapBindPair}[3]{\ensuremath{{#1}\mapsto\!\protoPair{#2}{#3}}}
+\newcommand{\runHeapCat}[2]{\ensuremath{{#1}[{#2}]}}
+\newcommand{\strongLocOfRunLoc}[1]{\ensuremath{\mathit{StrongLoc}(#1)}}
+\newcommand{\weakLocOfStrongLoc}[1]{\ensuremath{\mathit{WeakLoc}(#1)}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Type Syntax
+
+\newcommand{\tyBind}[2]{\ensuremath{{{#1}\!:\!{#2}}}}
+\newcommand{\heapBindNoParens}[2]{\ensuremath{{#1}\mapsto{#2}}}
+%%\newcommand{\heapBindNoParens}[2]{\ensuremath{\tyBind{*#1}{\miniSepOne#2}}}
+\newcommand{\heapBind}[2]{\ensuremath{(\heapBindNoParens{#1}{#2})}}
+\newcommand{\heapProxy}[2]{\ensuremath{({#1}\gg{#2})}}
+
+\newcommand{\helperop}[1]{\ensuremath{\mathit{#1}}}
+\newcommand{\typConst}[1]{\ensuremath{\helperop{ty}(#1)}}
+\newcommand{\dom}[1]{\ensuremath{\helperop{dom}({#1})}}
+\newcommand{\fold}[4]{\ensuremath{\helperop{Fold}({#1},{#2},{#3},{#4})}}
+\newcommand{\unfold}[3]{\ensuremath{\helperop{Unfold}({#1},{#2},{#3})}}
+\newcommand{\selfify}[2]{\ensuremath{\helperop{Selfify}({#1},\miniSepOne{#2})}}
+\newcommand{\freshen}[1]{\ensuremath{\helperop{Freshen}({#1})}}
+\newcommand{\envOfWorld}[1]{\ensuremath{\helperop{EnvOfWorld}({#1})}}
+
+%%\newcommand{\tyFont}[1]{\ensuremath{\mathit{#1}}}
+\newcommand{\tyFont}[1]{\ensuremath{\texttt{#1}}}
+\newcommand{\tyAny}{\ensuremath{\tyFont{any}}}
+\newcommand{\tyInt}{\ensuremath{\tyFont{int}}}
+\newcommand{\tyNum}{\ensuremath{\tyFont{num}}}
+\newcommand{\tyStr}{\ensuremath{\tyFont{str}}}
+\newcommand{\tyBool}{\ensuremath{\tyFont{bool}}}
+\newcommand{\tyUndef}{\ensuremath{\tyFont{undefined}}}
+\newcommand{\tyNull}{\ensuremath{\tyFont{null}}}
+\newcommand{\tyBot}{\ensuremath{\tyFont{bot}}}
+%%\newcommand{\tyBot}{\ensuremath{\bot}}
+
+\newcommand{\tyIntOrBool}{\ensuremath{\mathit{IntOrBool}}}
+\newcommand{\tyIntOrStr}{\ensuremath{\mathit{IntOrStr}}}
+\newcommand{\tyNumOrBool}{\ensuremath{\mathit{NumOrBool}}}
+\newcommand{\tyNumOrStr}{\ensuremath{\mathit{NumOrStr}}}
+
+\newcommand{\tyUnion}[2]{\ensuremath{{#1}\cup{#2}}}
+
+\newcommand{\tyOpen}[2]{\ensuremath{{#1}\Rightarrow{#2}}}
+
+%% traditional refinement type {x:B|p}
+\newcommand{\refinementType}[3]
+  {\ensuremath{\{ \tyBind{#1}{#2}\hspace{0.02in} | \hspace{0.02in}}{#3} \}}
+\newcommand{\theV}{\ensuremath{\nu}}
+
+
+\newcommand{\muType}[2]{\mu{#1}.\miniSepOne{#2}}
+
+\newcommand{\existsType}[2]
+  {\ensuremath{\exists\miniSepOne{#1}.\miniSepThree{#2}}}
+\newcommand{\existsLoc}[2]{\ensuremath{\existsType{#1}{#2}}}
+\newcommand{\existsVar}[3]{\ensuremath{\existsType{\tyBind{#1}{#2}}{#3}}}
+
+\newcommand{\tyRef}{\ensuremath{\mathit{Ref}}}
+\newcommand{\tyRefT}[1]{\ensuremath{\tyRef({#1})}}
+%%\newcommand{\tyRefT}[1]{\ensuremath{\tyRef\miniSepTwo{#1}}}
+\newcommand{\tyRefL}[1]{\ensuremath{\tyRef({#1})}}
+%% \newcommand{\tyRefMu}[2]{\ensuremath{\tyRef(\muType{#1}{#2})}}
+%% \newcommand{\tyRefExistsL}[2]
+%%   %%{\ensuremath{\exists\miniSepOne\heapBindNoParens{#1}{#2}.\miniSepTwo
+%%   %%             \tyRefL{#1}}}
+%%   {\ensuremath{\existsLoc{#1}{\heapSlash{\tyRefL{#1}}{\heapBind{#1}{#2}}}}}
+
+\newcommand{\tagInt}{\ttfld{integer}}
+\newcommand{\tagNum}{\ttfld{number}}
+\newcommand{\tagBool}{\ttfld{boolean}}
+\newcommand{\tagStr}{\ttfld{string}}
+\newcommand{\tagDict}{\ttfld{dictionary}}
+\newcommand{\tagFun}{\ttfld{function}}
+\newcommand{\tagBot}{\ttfld{bot}}
+\newcommand{\tagNull}{\ttfld{null}}
+\newcommand{\tagUndef}{\ttfld{undefined}}
+\newcommand{\tagObj}{\ttfld{object}}
+
+%% \newcommand{\tyTupleTwo}[2]{(\ensuremath{{#1},\miniSepTwo{#2}})}
+\newcommand{\tyTupleTwo}[2]{\ensuremath{{#1}*{#2}}}
+\newcommand{\tySum}[2]{\ensuremath{{#1}+{#2}}}
+\newcommand{\tyProduct}[2]{\tyTupleTwo{#1}{#2}}
+
+\newcommand{\tyArrayTupleTwo}[2]
+  {[\ensuremath{{#1},\miniSepTwo{#2}}]}
+\newcommand{\tyArrayTupleThree}[3]
+  {[\ensuremath{{#1},\miniSepTwo{#2},\miniSepTwo{#3}}]}
+
+%%\newcommand{\tyRecdWrap}[1]{\ensuremath{\{\miniSepTwo{#1}\miniSepTwo\}}}
+\newcommand{\tyRecdWrap}[1]{\ensuremath{[\miniSepTwo{#1}\miniSepTwo]}}
+\newcommand{\tyRecdSep}{\ensuremath{,}\miniSepOne}
+\newcommand{\tyRecdLaxDelim}{\ensuremath{\ldots}}
+
+\newcommand{\tyRecdZero}
+  %%{\ensuremath{\tyRecdWrap{}}}
+  {\ensuremath{\expRecdZero}}
+\newcommand{\tyRecd}[2]
+  {\ensuremath{\tyRecdWrap{\tyBind{#1}{#2}}}}
+\newcommand{\tyRecdTwo}[4]
+  {\ensuremath{\tyRecdWrap{\tyBind{#1}{#2}\tyRecdSep\tyBind{#3}{#4}}}}
+\newcommand{\tyRecdThree}[6]
+  {\ensuremath{\tyRecdWrap{\tyBind{#1}{#2}\tyRecdSep
+                           \tyBind{#3}{#4}\tyRecdSep
+                           \tyBind{#5}{#6}}}}
+
+\newcommand{\tyRecdLax}[2]
+  {\ensuremath{\tyRecdWrap{\tyBind{#1}{#2}\tyRecdSep\tyRecdLaxDelim}}}
+
+\newcommand{\tyRecdOneDots}[2]
+  {\ensuremath{\{ \tyBind{#1}{#2};\ \cdots\ \}}}
+\newcommand{\tyRecdDots}[4]
+  {\ensuremath{\{ \tyBind{#1}{#2};\ \cdots;\ \tyBind{#3}{#4} \}}}
+\newcommand{\tyRecdBotDots}[4]
+  {\ensuremath{\{ \tyBind{#1}{#2};\ \cdots;\ \tyBind{#3}{#4};\ 
+                  \tyBind{\_}{\tyBot} \}}}
+
+\newcommand{\tyRecdCat}[2]
+  {\ensuremath{{#1}+{#2}}}
+
+\newcommand{\tyMaybe}[1]{\ensuremath{{#1}?}}
+
+\newcommand{\typePredName}{\ensuremath{::}}
+\newcommand{\hasTyp}[2]{\ensuremath{{#1}\typePredName{#2}}}
+
+\newcommand{\refine}[2]
+  %%{\ensuremath{{#1}\{\hspace{0.02in}{#2}\hspace{0.02in}}\}}
+  {\ensuremath{{#1}\{\hspace{0.00in}{#2}\hspace{0.00in}}\}}
+
+%%\newcommand{\type}[2]{\ensuremath{\tyBind{#1}{\tyAny}\{{#2}\}}}
+%%\newcommand{\type}[2]
+%% {\ensuremath{\{ \tyBind{#1}{\tyAny}\hspace{0.02in} | \hspace{0.02in}}{#2} \}}
+\newcommand{\type}[2]
+  {\ensuremath{\{ #1\hspace{0.02in} | \hspace{0.02in}}{#2} \}}
+
+\newcommand{\typeBegin}[2]
+  {\ensuremath{\{ #1\hspace{0.02in} | \hspace{0.02in}}{#2}}
+\newcommand{\typeEnd}[1]
+  {\ensuremath{{#1} \}}}
+
+\newcommand{\varSugarBaseTyp}{\varBaseTyp^{*}}
+\newcommand{\varSugarTyp}{\varTyp^{*}}
+\newcommand{\varSugarTT}{\varTT^{*}}
+\newcommand{\sugarType}[3]
+  {\ensuremath{\{ \tyBind{#1}{(#2)}\hspace{0.02in} | \hspace{0.02in}}{#3} \}}
+%%\newcommand{\generalType}[2]{\refinementType{#1}{\tyAny}{#2}}
+\newcommand{\generalType}[2]{\type{#1}{#2}}
+
+\newcommand{\affineType}[1]{\ensuremath{\tyConstructed{\ctor{Affine}}}{#1}}
+
+%%\newcommand{\placeholder}{\ensuremath{-}}
+\newcommand{\placeholder}{\ensuremath{\cdot}}
+
+\newcommand{\join}[2]{\ensuremath{#1 \sqcup #2}}
+\newcommand{\meet}[2]{\ensuremath{#1 \sqcap #2}}
+\newcommand{\joinWide}[2]{\ensuremath{#1\ \ \sqcup\ \ #2}}
+\newcommand{\meetWide}[2]{\ensuremath{#1\ \ \sqcap\ \ #2}}
+
+\newcommand{\ttArr}{\ensuremath{{\rightarrow}}}
+\newcommand{\ttArrow}[2]
+  {\ensuremath{{#1}\miniSepThree\ttArr\miniSepThree#2}}
+%% \newcommand{\ttArrowPoly}[3]
+%%   {\ensuremath{\forall{#1}.\miniSepFive\ttArrow{#2}{#3}}}
+%% \newcommand{\ttArrowPolyWeak}[4]
+%%   {\ensuremath{\forall{#1}.\miniSepFive{#2}\Rightarrow\ttArrow{#3}{#4}}}
+%% 
+%% \newcommand{\ttArrowTwo}[3]{\ttArrow{#1}{\ttArrow{#2}{#3}}}
+%% \newcommand{\ttArrowThree}[4]{\ttArrow{#1}{\ttArrowTwo{#2}{#3}{#4}}}
+%% 
+
+\newcommand{\tyArrow}[2]{\ttArrow{#1}{#2}}
+\newcommand{\heapSlash}[2]{{#1}\miniSepTwo/\miniSepTwo{#2}}
+\newcommand{\world}[2]{\heapSlash{#1}{#2}}
+\newcommand{\worldIn}[2]{\forall{#1}.\miniSepTwo{#2}}
+\newcommand{\worldOut}[2]{\exists{#1}.\miniSepTwo{#2}}
+
+%%\newcommand{\tyArrowPoly}[6]
+%%  {\ttArrow{({\forall{#1}.}\miniSepTwo\heapSlash{#2}{#3})}
+%%           {({\exists{#4}.}\miniSepTwo\heapSlash{#5}{#6})}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Type Checking Syntax
+
+\newcommand{\emptyEnv}{-}
+%%\newcommand{\emptyEnv}{\emptyset}
+%%\newcommand{\envCat}[2]{\ensuremath{{#1},{#2}}}
+\newcommand{\envCat}[2]{\ensuremath{{#1},\hspace{0.02in}{#2}}}
+\newcommand{\envCatThree}[3]{\ensuremath{\envCat{#1}{\envCat{#2}{#3}}}}
+\newcommand{\envCatFour}[4]{\ensuremath{\envCat{#1}{\envCatThree{#2}{#3}{#4}}}}
+\newcommand{\envCatFive}[5]
+  {\ensuremath{\envCat{#1}{\envCatFour{#2}{#3}{#4}{#5}}}}
+\newcommand{\envCatSix}[6]
+  {\ensuremath{\envCat{#1}{\envCatFive{#2}{#3}{#4}{#5}{#6}}}}
+\newcommand{\envCatSeven}[7]
+  {\ensuremath{\envCat{#1}{\envCatSix{#2}{#3}{#4}{#5}{#6}{#7}}}}
+
+\newcommand{\emptyLabelEnv}{-}
+
+\newcommand{\heapCatOp}{\oplus}
+\newcommand{\heapCat}[2]{\ensuremath{{#1} \heapCatOp {#2}}}
+\newcommand{\heapCatThree}[3]{\ensuremath{\heapCat{#1}{\heapCat{#2}{#3}}}}
+\newcommand{\heapCatFour}[4]
+  {\ensuremath{\heapCat{#1}{\heapCatThree{#2}{#3}{#4}}}}
+\newcommand{\heapCatFive}[5]
+  {\ensuremath{\heapCat{#1}{\heapCatFour{#2}{#3}{#4}{#5}}}}
+
+\newcommand{\heapEqSym}{\equiv}
+\newcommand{\heapEq}[2]{\ensuremath{{#1}\heapEqSym{#2}}}
+
+%%\newcommand{\heapImp}[2]{\ensuremath{{#1} \Rightarrow {#2}}}
+\newcommand{\heapImp}[2]{\ensuremath{{#1} \supseteq {#2}}}
+\newcommand{\guarantee}[1]{\ensuremath{\textrm{Guarantee}(#1)}}
+\newcommand{\rely}[1]{\ensuremath{\textrm{Rely}(#1)}}
+\newcommand{\heapOkay}[1]{\heapImp{\rely{#1}}{\guarantee{#1}}}
+
+\newcommand{\simpleSub}[2]{\ensuremath{{#1}\symSynSub{#2}}}
+
+\newcommand{\relSp}{\hspace{0.02in}}
+
+\newcommand{\typExpPure}[4]
+  {\ensuremath{#1\relSp|\relSp#2\miniSepTwo\vdash#3\relSp::\relSp#4}}
+\newcommand{\typExp}[5]
+  {\ensuremath{#1\relSp|\relSp#2\miniSepTwo\vdash#3\relSp::\relSp#4\relSp|\relSp#5}}
+
+\newcommand{\relWf}[2]{\ensuremath{#1\vdash #2}}
+
+%% \newcommand{\symSub}{\sqsubseteq}
+\newcommand{\symSub}{<:}
+\newcommand{\relSub}[3]{\ensuremath{#1\vdash #2\relSp\symSub \relSp#3}}
+
+\newcommand{\heapSat}[3]
+  {\ensuremath{#1\vdash {#2}\relSp\models \relSp#3}}
+
+\newcommand{\worldSat}[5]
+  {\ensuremath{#1\vdash \world{#2}{#3}\relSp\models \relSp#4;\ #5}}
+
+\newcommand{\emptySubst}{[]}
+\newcommand{\substOne}[2]{[{#2}/{#1}]}
+\newcommand{\subst}[3]{{#1}\substOne{#2}{#3}}
+
+\newcommand{\formulaSat}[2]{\interp{#1}\models{#2}}
+
+\newcommand{\setComp}[2]
+           {\ensuremath{\{\miniSepThree #1 \hspace{0.02in}
+                            \mid\hspace{0.02in} #2 \miniSepThree\}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Syntax Figures
+
+%%\newcommand{\figSyntaxBegin}{$$\begin{array}{rrcl}}
+%%\newcommand{\figSyntaxEnd}{\end{array}$$}
+%%\newcommand{\figSyntaxBeginWithDescriptions}{$\begin{array}{rrcll}}
+\newcommand{\figSyntaxBegin}{$\begin{array}{rrcl}}
+\newcommand{\figSyntaxEnd}{\end{array}$}
+\newcommand{\figSyntaxRow}{&&\sep\mid\sep&}
+\newcommand{\figSyntaxContinueCategory}{\\[2pt] \figSyntaxRow}
+%%\newcommand{\figSyntaxRow}{&&\mid&}
+%%\newcommand{\figSyntaxRowLabel}[2]{{\textbf{#1}}&\sep{#2}&\sep{::=}\sep&}
+
+\newcommand{\figSyntaxMetaVars}[2]{&{#1}&\sep\in\sep&\mathit{#2}}
+
+%% keeps label and metavars in separate cols...
+%% \newcommand{\figSyntaxRowLabel}[2]{{\textbf{#1}}&{#2}&\sep{::=}\sep&}
+%% \newcommand{\figSyntaxMetaVarsFirst}[3]
+%%   {\textbf{#1}&{#2}&\sep\in\sep&\mathit{#3}}
+%% \newcommand{\figSyntaxJudgement}[2]{{\textbf{#1}}&\multicolumn{3}{l}{\sep#2}}
+
+%% puts label and metavars in _same_ col...
+%% TODO if sticking with this version, get rid of first column altogether
+%%   since it eats some space
+\newcommand{\figSyntaxRowLabel}[2]{&{\textbf{#1}}\sep\sep{#2}&\sep{::=}\sep&}
+\newcommand{\figSyntaxMetaVarsFirst}[3]
+  {&\textbf{#1}\sep\sep{#2}&\sep\in\sep&\mathit{#3}}
+\newcommand{\figSyntaxJudgement}[2]{\multicolumn{3}{r}{\textbf{#1}}&\multicolumn{1}{l}{#2}}
+
+%% NOTE: if using \figSpacing in syntax figures, then probably want this to be 0
+%%\newcommand{\figSyntaxSpaceNextCategory}{\\[2pt] }
+\newcommand{\figSyntaxSpaceNextCategory}{\\[4pt] }
+%%\newcommand{\figSyntaxSpaceNextCategory}{\vspace{0.05in}}
+\newcommand{\figSyntaxSpaceItem}{\sep\mid\sep}
+
+\newcommand{\figSyntaxBeginWithDescriptions}{$\begin{array}{rcll}}
+\newcommand{\figSyntaxRowWithDescriptions}{&\sep\mid\sep&}
+
+\newcommand{\ruleName}[1]{\textsc{\begin{normalsize}#1\end{normalsize}}}
+%%\newcommand{\ruleNameFig}[1]{\begin{scriptsize}[#1]\end{scriptsize}}
+\newcommand{\ruleNameFig}[1]{\textsc{\begin{scriptsize}[#1]\end{scriptsize}}}
+\newcommand{\relDescription}[1]{\ensuremath{\textrm{\textbf{#1}}}}
+\newcommand{\judgementHead}[2]{\ensuremath{\relDescription{#1}\hfill\fbox{#2}}}
+\newcommand{\judgementHeadNameOnly}[1]{\ensuremath{\relDescription{#1}\hfill}}
+\newcommand{\judgementHeadThree}[3]
+  {\ensuremath{\relDescription{#1}\ \textrm{{#2}}\hfill\fbox{#3}}}
+\newcommand{\judgementHeadNoBox}[2]{\ensuremath{\relDescription{#1}\hfill{#2}}}
+\newcommand{\judgementHeadThreeNoBox}[3]
+  {\ensuremath{\relDescription{#1}\ \textrm{#2}\hfill{#3}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fixed Width Letters
+
+\newcommand{\tta}{\ensuremath{\texttt{a}}}
+\newcommand{\ttb}{\ensuremath{\texttt{b}}}
+\newcommand{\ttc}{\ensuremath{\texttt{c}}}
+\newcommand{\ttd}{\ensuremath{\texttt{d}}}
+\newcommand{\tte}{\ensuremath{\texttt{e}}}
+\newcommand{\ttf}{\ensuremath{\texttt{f}}}
+\newcommand{\ttg}{\ensuremath{\texttt{g}}}
+\newcommand{\tth}{\ensuremath{\texttt{h}}}
+\newcommand{\tti}{\ensuremath{\texttt{i}}}
+\newcommand{\ttj}{\ensuremath{\texttt{j}}}
+\newcommand{\ttk}{\ensuremath{\texttt{k}}}
+\newcommand{\ttn}{\ensuremath{\texttt{n}}}
+\newcommand{\tto}{\ensuremath{\texttt{o}}}
+\newcommand{\ttp}{\ensuremath{\texttt{p}}}
+\newcommand{\ttq}{\ensuremath{\texttt{q}}}
+\newcommand{\ttt}{\ensuremath{\texttt{t}}}
+\newcommand{\ttv}{\ensuremath{\texttt{v}}}
+\newcommand{\ttw}{\ensuremath{\texttt{w}}}
+\newcommand{\ttx}{\ensuremath{\texttt{x}}}
+\newcommand{\tty}{\ensuremath{\texttt{y}}}
+\newcommand{\ttz}{\ensuremath{\texttt{z}}}
+\newcommand{\ttA}{\ensuremath{\texttt{A}}}
+\newcommand{\ttB}{\ensuremath{\texttt{B}}}
+\newcommand{\ttC}{\ensuremath{\texttt{C}}}
+\newcommand{\ttX}{\ensuremath{\texttt{X}}}
+\newcommand{\ttY}{\ensuremath{\texttt{Y}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Figures
+
+\newcommand{\figFrameBegin}{\begin{framed}}
+\newcommand{\figFrameEnd}{\end{framed}}
+
+%% using the same factor as the text, so that typing rules in the text
+%% look the same as in figures
+
+%%\newcommand{\figSpacing}{\setstretch{\rkcSpacingFactor}}
+

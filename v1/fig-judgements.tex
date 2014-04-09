@@ -1,0 +1,55 @@
+\begin{figure}[b]
+%%\figFrameBegin
+\centering
+\figSyntaxBegin
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\figSyntaxRowLabel{Type Environments}{\Gamma}
+  \emptyEnv
+\figSyntaxContinueCategory
+  \envCat{\Gamma}{\tyBind{x}{\varTypS}}
+\figSyntaxContinueCategory
+  \envCat{\Gamma}{\varForm}
+\figSyntaxContinueCategory
+  \envCat{\Gamma}{\varTyVar}
+  \figSyntaxSpaceItem
+  \envCat{\Gamma}{\varMuVar}
+\figSyntaxContinueCategory
+  \envCat{\Gamma}{\varLocVar}
+  \figSyntaxSpaceItem
+  \envCat{\Gamma}{\varHeapVar}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\figSyntaxSpaceNextCategory
+\figSyntaxRowLabel{Heap Environments}{\varHeapEnv}
+  \varHeapVar
+\figSyntaxContinueCategory
+  \heapCat{\varHeapEnv}{\heapBind{\varLoc}{\varVal}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\figSyntaxSpaceNextCategory
+\figSyntaxRowLabel{Prenex Types}{\varPrenexTyp}
+  \varTypS
+\figSyntaxContinueCategory
+  \existsLoc{\varLocVar}{\varPrenexTyp}
+\figSyntaxContinueCategory
+  \existsVar{\varVar}{\varTypS}{\varPrenexTyp}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\figSyntaxSpaceNextCategory
+
+\figSyntaxSpaceNextCategory
+\figSyntaxJudgement{Value Typing}{\rkc{TODO}}
+\figSyntaxSpaceNextCategory
+\figSyntaxJudgement{Expression Typing}{\rkc{TODO}}
+\figSyntaxSpaceNextCategory
+\figSyntaxJudgement{World Satisfaction}{\rkc{TODO}}
+\figSyntaxSpaceNextCategory
+\figSyntaxJudgement{Subtyping}{\rkc{TODO}}
+\figSyntaxSpaceNextCategory
+\figSyntaxJudgement{Well-Formedness}{\rkc{TODO}}
+
+\figSyntaxEnd
+\caption{Syntax of Typing Judgements for \lang}
+%%\figFrameEnd
+\end{figure}

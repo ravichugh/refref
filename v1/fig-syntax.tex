@@ -1,0 +1,132 @@
+%%\begin{figure*}[t]
+\begin{figure}[t]
+%%\figFrameBegin
+\centering
+\figSyntaxBegin
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\figSyntaxRowLabel{Values}{\varVal}
+  \varConst
+  \figSyntaxSpaceItem
+  \varVar
+  \figSyntaxSpaceItem
+  \valFun{\varVar}{\varExp}
+\figSyntaxContinueCategory
+  \varRunLoc
+  \figSyntaxSpaceItem
+  \expTupleTwo{\varVal_1}{\varVal_2}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\figSyntaxSpaceNextCategory
+\figSyntaxRowLabel{Expressions}{\varExp}
+  \varVal
+\figSyntaxContinueCategory
+  \expApp{\varExp_1}{\varExp_2}
+\figSyntaxContinueCategory
+  \expLet{\varVar}{\varExp_1}{\varExp_2}
+\figSyntaxContinueCategory
+  \expRef{\varVal}
+  \figSyntaxSpaceItem
+  \expDeref{\varVal}
+  \figSyntaxSpaceItem
+  \expAssign{\varVal_1}{\varVal_2}
+\figSyntaxContinueCategory
+  \expCase{\varVal}{\varExp_1}{\varExp_2}
+\figSyntaxContinueCategory
+  \expFst{\varVal}
+  \figSyntaxSpaceItem
+  \expSnd{\varVal}
+\figSyntaxContinueCategory
+  \expFold{\varTyVarX}{\varHeapConstraints}{\varTypS}{\varExp}
+\figSyntaxContinueCategory
+  \expUnfold{\varTyVarX}{\varHeapConstraints}{\varTypS}{\varExp}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\figSyntaxSpaceNextCategory
+\figSyntaxRowLabel{Formulas}{\varFormOne,\varFormTwo}
+  \varLogP(\seq{\varVal})
+  \figSyntaxSpaceItem
+  \varFormOne \land \varFormTwo
+  \figSyntaxSpaceItem
+  \varFormOne \lor \varFormTwo
+  \figSyntaxSpaceItem
+  \neg \varFormOne
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\figSyntaxSpaceNextCategory
+\figSyntaxRowLabel{Types}{\varTypS,\varTyp}
+  \refinementType{\theV}{\varBaseTyp}{\varForm}
+  \figSyntaxSpaceItem
+  \tyRefL{\varLoc}
+\figSyntaxContinueCategory
+  \tyArrow{\worldIn{\seq{\varTyVar},\seq{\varLocVar},\seq{\varHeapVar}}{\varWorld_1}}
+          {\worldOut{\seq{\varLocVarM}}{\varWorld_2}}
+  %%\tyArrow{\worldIn{\seq{\varTyVar},\seq{\varLocVar_1},\seq{\varHeapVar}}{\varWorld_1}}
+  %%        {\worldOut{\seq{\varLocVar_2}}{\varWorld_2}}
+\figSyntaxContinueCategory
+  \tySum{\varTypS}{\varTyp}
+  \figSyntaxSpaceItem
+  \tyProduct{\varTypS}{\varTyp}
+\figSyntaxContinueCategory
+  \varTyVar
+  \figSyntaxSpaceItem
+  \varMuVar
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\figSyntaxSpaceNextCategory
+\figSyntaxRowLabel{Heap Types}{\varHeapTyp}
+  \varTypS
+  \figSyntaxSpaceItem
+  \muType{\varMuVar}{\existsType{\varHeapConstraints}{\varTypS}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\figSyntaxSpaceNextCategory
+\figSyntaxRowLabel{Worlds}{\varWorld}
+  \world{\varTypS}{\varHeap}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\figSyntaxSpaceNextCategory
+\figSyntaxRowLabel{Heaps}{\varHeap}
+  \heapCat{\varHeapVar}{\varHeapConstraints}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\figSyntaxSpaceNextCategory
+%%\figSyntaxRowLabel{Heap Constraints}{\varHeapConstraints}
+\figSyntaxRowLabel{Constraints}{\varHeapConstraints}
+  \emptyEnv
+  \figSyntaxSpaceItem
+  \heapCat{\varHeapConstraints}{\heapBind{\varLoc}{\tyBind{\varVar}{\varTyp}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\figSyntaxSpaceNextCategory
+\figSyntaxRowLabel{Locations}{\varLoc}
+  \varLocConst
+  \figSyntaxSpaceItem
+  \varLocVar
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\figSyntaxSpaceNextCategory
+%%\figSyntaxMetaVarsFirst{Metavariables}{x,y,z}{Identifiers}
+\figSyntaxMetaVarsFirst{}{x,y,z}{Identifiers}
+\figSyntaxSpaceNextCategory
+\figSyntaxMetaVars{\varField,\varFieldG}{Fields}
+\figSyntaxSpaceNextCategory
+\figSyntaxMetaVars{\varTyVar,\varTyVarB}{TypeVars}
+\figSyntaxSpaceNextCategory
+\figSyntaxMetaVars{\varLocVar,\varLocVarM}{LocationVars}
+\figSyntaxSpaceNextCategory
+\figSyntaxMetaVars{\varHeapVar}{HeapVars}
+\figSyntaxSpaceNextCategory
+\figSyntaxMetaVars{\varTyVarX}{RecursiveTypeVars}
+\figSyntaxSpaceNextCategory
+\figSyntaxMetaVars{\varLocConst}{StaticLocations}
+\figSyntaxSpaceNextCategory
+\figSyntaxMetaVars{\varRunLoc}{DynamicLocations}
+
+\figSyntaxSpaceNextCategory
+
+\figSyntaxEnd
+\caption{Syntax of \lang}
+%%\figFrameEnd
+\end{figure}
+%%\end{figure*}

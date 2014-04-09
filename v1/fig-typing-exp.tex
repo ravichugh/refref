@@ -1,0 +1,229 @@
+\begin{figure*}[t]
+%%\figFrameBegin
+\centering
+
+\judgementHead
+  {Expression Typing}
+  {$\typExp{\Gamma}{\varHeapEnv}{\varExp}{\varPrenexTyp}{\varHeapEnv'}$}
+
+\vsepRule 
+
+$\inferrule*[right=\ruleNameFig{T-Val}]
+  {\typExpPure{\Gamma}{\varHeapEnv}{\varVal}{\varTypS}}
+  {\typExp{\Gamma}{\varHeapEnv}{\varVal}{\varTypS}{\varHeapEnv}}
+$
+%
+\hsepRule
+%
+$\inferrule*[right=\ruleNameFig{T-Sub}]
+  {
+   \typExpPure{\Gamma}{\varHeapEnv}{\varVal}{\varTypS}
+   \sepPremise
+   \relSub{\Gamma}{\varTypS}{\varTyp}
+  }
+  {\typExp{\Gamma}{\varHeapEnv}{\varVal}{\varTyp}{\varHeapEnv}}
+$
+
+\vsepRule
+
+$\inferrule*[right=\ruleNameFig{T-Ref}]
+  {\varLocVar\notin\Gamma \sepPremise
+   \typExpPure{\Gamma}{\varHeapEnv}{\varVal}{\varTypS}}
+  {\typExp{\Gamma}{\varHeapEnv}
+          {\expRef{\varVal}}
+          {\existsLoc{\varLocVar}{\tyRefL{\varLocVar}}}
+          {\heapCat{\varHeapEnv}{\heapBind{\varLocVar}{\varVal}}}}
+$
+%
+\hsepRule
+%
+$\inferrule*[right=\ruleNameFig{T-Deref}]
+  {
+   \typExpPure{\Gamma}{\varHeapEnv}{\varVal_1}{\tyRefL{\varLoc}} \sepPremise
+   \heapEq{\varHeapEnv}{\heapCat{\varHeapEnv_0}{\heapBind{\varLoc}{\varVal_2}}} \sepPremise
+   \typExpPure{\Gamma}{\varHeapEnv}{\varVal_2}{\varTypS}
+  }
+  {\typExp{\Gamma}{\varHeapEnv}
+          {\expDeref{\varVal_1}}
+          {\selfify{\varTypS}{\varVal_2}}
+          {\varHeapEnv}}
+$
+
+\vsepRule
+
+$\inferrule*[right=\ruleNameFig{T-Setref}]
+  {
+   \typExpPure{\Gamma}{\varHeapEnv}{\varVal_1}{\tyRefL{\varLoc}} \sepPremise
+   \heapEq{\varHeapEnv}{\heapCat{\varHeapEnv_0}{\heapBind{\varLoc}{\varVal}}} \sepPremise
+   \typExpPure{\Gamma}{\varHeapEnv}{\varVal_2}{\varTypS}
+  }
+  {\typExp{\Gamma}{\varHeapEnv}
+          {\expAssign{\varVal_1}{\varVal_2}}
+          {\selfify{\varTypS}{\varVal_2}}
+          {\heapCat{\varHeapEnv_0}{\heapBind{\varLoc}{\varVal_2}}}}
+$
+
+\vsepRule
+
+$\inferrule*[right=\ruleNameFig{T-Case}]
+  {
+   \rkc{define join} \sepPremise \rkc{shadowing x in env...}
+   \sepPremise
+   \rkc{maybe use untagged unions and if-expressions instead...}
+   \\\\
+   \typExpPure{\Gamma}{\varHeapEnv}{\varVar}{\tySum{\varTypS}{\varTyp}} \sepPremise
+   \typExp{\envCat{\Gamma}{\tyBind{\varVar}{\varTypS}}}{\varHeapEnv}{\varExp_1}{\varPrenexTyp_1}{\varHeapEnv_1} \sepPremise
+   \typExp{\envCat{\Gamma}{\tyBind{\varVar}{\varTyp}}}{\varHeapEnv}{\varExp_2}{\varPrenexTyp_2}{\varHeapEnv_2} \sepPremise
+   \join{(\heapSlash{\varPrenexTyp_1}{\varHeapEnv_1})}
+        {(\heapSlash{\varPrenexTyp_2}{\varHeapEnv_2})} =
+     (\heapSlash{\varPrenexTyp}{\varHeapEnv'})
+  }
+  {\typExp{\Gamma}{\varHeapEnv}
+          {\expCase{\varVar}{\varExp_1}{\varExp_2}}
+          {\varPrenexTyp}{\varHeapEnv'}}
+$
+
+\vsepRule
+
+$\inferrule*[right=\ruleNameFig{T-Fst}]
+  {\typExpPure{\Gamma}{\varHeapEnv}{\varVal}{\tyProduct{\varTypS}{\varTyp}}}
+  {\typExp{\Gamma}{\varHeapEnv}{\expFst{\varVal}}{\varTypS}{\varHeapEnv}}
+$
+%
+\hsepRule
+%
+$\inferrule*[right=\ruleNameFig{T-Snd}]
+  {\typExpPure{\Gamma}{\varHeapEnv}{\varVal}{\tyProduct{\varTypS}{\varTyp}}}
+  {\typExp{\Gamma}{\varHeapEnv}{\expSnd{\varVal}}{\varTyp}{\varHeapEnv}}
+$
+
+\vsepRule
+
+$\inferrule*[right=\ruleNameFig{T-Let}]
+  {
+   \rkc{define helper to manipulate existentials}
+   \\\\
+   \typExp{\Gamma}
+          {\varHeapEnv}
+          {\varExp_1}
+          {\existsLoc{\seq{\varLocVar_1}}{\existsVar{\seq{\varVarY_1}}{\seq{\varTypS_1}}{\varTyp_1}}}
+          {\varHeapEnv_1} \sepPremise
+   \typExp{\envCatFour{\Gamma}
+                      {\seq{\varLocVar_1}}
+                      {\tyBind{\seq{\varVarY_1}}{\seq{\varTypS_1}}}
+                      {\tyBind{\varVar}{\varTyp_1}}}
+          {\varHeapEnv_1}
+          {\varExp_2}
+          {\existsLoc{\seq{\varLocVar_2}}{\existsVar{\seq{\varVarY_2}}{\seq{\varTypS_2}}{\varTyp_2}}}
+          {\varHeapEnv_2}
+  }
+  {\typExp{\Gamma}
+          {\varHeapEnv}
+          {\expLet{\varVar}{\varExp_1}{\varExp_2}}
+          {\existsLoc{\seq{\varLocVar_1}}
+             {\existsLoc{\seq{\varLocVar_2}}
+                {\existsVar{\seq{\varVarY_1}}{\seq{\varTypS_1}}
+                   {\existsVar{\seq{\varVarY_2}}{\seq{\varTypS_2}}
+                      {\existsVar{\varVar}{\varTyp_1}
+                         {\varTyp_2}}}}}}
+          {\varHeapEnv_2}}
+$
+
+\vsepRule
+
+$\inferrule*[right=\ruleNameFig{T-App}]
+  {\rkc{TODO}}
+  {\typExp{\Gamma}{\varHeapEnv}{\expApp{\varExp_1}{\varExp_2}}{\cdots}{\cdots}}
+$
+
+\vsepRule
+
+$\inferrule*[right=\ruleNameFig{T-Fold}]
+  {
+   \heapEq{\varHeapConstraints}
+          {\heapCatThree{\heapBind{\varLocVar_1}{\tyBind{\varVar_1}{\varTypS_1}}}
+                        {\cdots}
+                        {\heapBind{\varLocVar_n}{\tyBind{\varVar_n}{\varTypS_n}}}}
+   \\\\
+   \typExpPure{\Gamma}{\varHeapEnv}{\varVal}{\tyRefL{\varLoc}} \sepPremise
+   \heapEq{\varHeapEnv}
+          {\heapCatFive{\varHeapEnv_0}
+                       {\heapBind{\varLoc}{\varVal_0}}
+                       {\heapBind{\varLocVarM_1}{\varVal_1}}
+                       {\cdots}
+                       {\heapBind{\varLocVarM_n}{\varVal_n}}}
+   \\\\
+   \varSubst =
+      \substOne{\seq{\varLocVar}}{\seq{\varLocVarM}}
+   \sepPremise
+   \heapSat{\Gamma}{\varHeapEnv}{\varHeapConstraints}
+   \sepPremise
+   \typExpPure{\Gamma}{\varHeapEnv}{\varVal_0}
+              {\subst{\varSubst\varTypS}
+                     {\varTyVarX}
+                     {(\muType{\varTyVarX}{\existsType{\varHeapConstraints}{\varTypS}})}}
+   \\\\
+   \varVarY \textrm{ fresh}
+   \sepPremise
+   \varHeapEnv' =
+      \heapCat{\varHeapEnv_0}
+              {\heapBind{\varLoc}{\varVarY}}
+   \sepPremise
+   \relWf{\Gamma}{\varHeapEnv'}
+  }
+  {\typExp{\Gamma}{\varHeapEnv}
+          {\expFold{\varTyVarX}{\varHeapConstraints}{\varTypS}{\varVal}}
+          {\existsVar{\varVarY}
+              {(\muType{\varTyVarX}{\existsType{\varHeapConstraints}
+                                               {\varTypS}})}{\tyRefL{\varLoc}}}
+          {\varHeapEnv'}}
+$
+
+\vsepRule
+
+$\inferrule*[right=\ruleNameFig{T-Unfold}]
+  {
+   \heapEq{\freshen{\varHeapConstraints}}
+          {\heapCatThree{\heapBind{\varLocVar_1}{\tyBind{\varVar_1}{\varTypS_1}}}
+                        {\cdots}
+                        {\heapBind{\varLocVar_n}{\tyBind{\varVar_n}{\varTypS_n}}}}
+   \\\\
+   \typExpPure{\Gamma}{\varHeapEnv}{\varVal}{\tyRefL{\varLoc}} \sepPremise
+   \heapEq{\varHeapEnv}
+          {\heapCat{\varHeapEnv_0}{\heapBind{\varLoc}{\varVal_0}}}
+   \sepPremise
+   \typExpPure{\Gamma}{\varHeapEnv}{\varVal_0}
+              {\muType{\varTyVarX}{\existsType{\varHeapConstraints}{\varTypS}}}
+   \\\\
+   \seq{\varLocVarM} \textrm{ fresh} \sepPremise
+   \varSubst = \substOne{\seq{\varLocVar}}{\seq{\varLocVarM}}
+   \sepPremise
+   %%\seq{\varTypS'} = \varSubst\seq{\varTypS}
+   \varTyp_1 = \varSubst\varTypS_1,\ \ldots,\
+   \varTyp_n = \varSubst\varTypS_n
+   \sepPremise
+   \varTyp = \subst{\varSubst\varTypS}
+                     {\varTyVarX}
+                     {(\muType{\varTyVarX}{\existsType{\varHeapConstraints}{\varTypS}})}
+   \\\\
+   \varVarY \textrm{ fresh} \sepPremise
+   \varHeapEnv' =
+      \heapCatFive{\varHeapEnv_0}
+                  {\heapBind{\varLoc}{\varVarY}}
+                  {\heapBind{\varLocVarM_1}{\varVar_1}}
+                  {\cdots}
+                  {\heapBind{\varLocVarM_n}{\varVar_n}}
+   \sepPremise
+   \relWf{\Gamma}{\varHeapEnv'}
+  }
+  {\typExp{\Gamma}{\varHeapEnv}
+          {\expUnfold{\varTyVarX}{\varHeapConstraints}{\varTypS}{\varVal}}
+          {\existsVar{\seq{\varVar}}{\seq{\varTyp}}{\existsVar{\varVarY}{\varTyp}{\tyRefL{\varLoc}}}}
+          {\varHeapEnv'}}
+$
+
+\vsepRule
+
+\caption{Expression Type Checking for \lang}
+%%\figFrameEnd
+\end{figure*}

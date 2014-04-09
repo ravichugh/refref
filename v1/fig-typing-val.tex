@@ -1,0 +1,90 @@
+\begin{figure*}[t]
+%%\figFrameBegin
+\centering
+
+\judgementHead
+  {Value Typing}
+  {$\typExpPure{\Gamma}{\varHeapEnv}{\varVal}{\varTypS}$}
+
+\vsepRule
+
+$\inferrule*[right=\ruleNameFig{T-Const}]
+  { }
+  {\typExpPure{\Gamma}{\varHeapEnv}{\varConst}{\typConst{\varConst}}}
+$
+%
+\hsepRule
+%
+$\inferrule*[right=\ruleNameFig{T-Var}]
+  {\Gamma(\varVar)=\varTypS}
+  {\typExpPure{\Gamma}{\varHeapEnv}{\varVar}{\selfify{\varTypS}{\varVar}}}
+$
+%
+\hsepRule
+%
+$\inferrule*[right=\ruleNameFig{T-Loc}]
+  {\rkc{TODO}}
+  {\typExpPure{\Gamma}{\varHeapEnv}{\varRunLoc}{\tyRefL{\varLoc}}}
+$
+
+\vsepRule
+
+$\inferrule*[right=\ruleNameFig{T-Pair}]
+  {\typExpPure{\Gamma}{\varHeapEnv}{\varVal_1}{\varTypS_1} \sepPremise
+   \typExpPure{\Gamma}{\varHeapEnv}{\varVal_2}{\varTypS_2}}
+  {\typExpPure{\Gamma}{\varHeapEnv}{\expTupleTwo{\varVal_1}{\varVal_2}}{\tyProduct{\varTypS_1}{\varTypS_2}}}
+$
+
+\vsepRule
+
+$\inferrule*[right=\ruleNameFig{T-Fun}]
+  {
+   \relWf{\Gamma}
+     {\tyArrow
+         {\worldIn
+             {\seq{\varTyVar},\seq{\varLocVar},\seq{\varHeapVar}}
+             {\varWorld_1}}
+         {\worldOut
+             {\seq{\varLocVarM}}
+             {\varWorld_2}}}
+   \sepPremise
+   \envOfWorld{\varWorld_1} = (\tyBind{\varVar}{\varTyp}, \tyBind{\seq{\varVar}}{\seq{\varTyp}}, \varHeapEnv_1)
+   \\\\
+   \Gamma_1 = 
+     \envCatSix
+       {\Gamma}
+       {\seq{\varTyVar}}
+       {\seq{\varLocVar}}
+       {\seq{\varHeapVar}}
+       {\tyBind{\seq{\varVar}}{\seq{\varTyp}}}
+       {\tyBind{\varVar}{\varTyp}}
+   \sepPremise
+   \typExp{\Gamma_1}{\varHeapEnv_1}{\varExp}{\varTypS}{\varHeapEnv_2}
+   \sepPremise
+   \varSubst = \substOne{\seq{\varLocVarM}}{\rkc{...}}
+   \sepPremise
+   \worldSat{\Gamma_1}{\varTypS}{\varHeapEnv_2}{\varSubst\varWorld_2}{\varSubst'}
+  }
+  {\typExpPure{\Gamma}{\varHeapEnv}{\valFun{\varVar}{\varExp}}
+      {\tyArrow
+         {\worldIn
+             {\seq{\varTyVar},\seq{\varLocVar},\seq{\varHeapVar}}
+             {\varWorld_1}}
+         {\worldOut
+             {\seq{\varLocVarM}}
+             {\varWorld_2}}}}
+$
+
+\vsepRule
+
+\judgementHead
+  {World Satisfaction}
+  {$\worldSat{\Gamma}{\varTyp}{\varHeapEnv}{\varWorld}{\varSubst}$}
+
+\rkc{TODO}
+
+\vsepRule
+
+\caption{Value Type Checking for \lang}
+%%\figFrameEnd
+\end{figure*}
